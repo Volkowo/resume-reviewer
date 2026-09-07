@@ -1,0 +1,111 @@
+@reference "../styles.css";
+
+.navbar {
+  @apply relative bg-gray-800;
+}
+
+.navbar-container {
+  @apply mx-auto max-w-7xl px-2 sm:px-6 lg:px-8;
+}
+
+.navbar-header {
+  @apply relative flex h-16 items-center justify-between;
+}
+
+.mobile-menu-controls {
+  @apply absolute inset-y-0 left-0 flex items-center sm:hidden;
+}
+
+.mobile-menu-toggle {
+  @apply relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500;
+}
+
+.menu-toggle-hit-area {
+  @apply absolute -inset-0.5;
+}
+
+.visually-hidden {
+  @apply sr-only;
+}
+
+.menu-open-icon {
+  @apply size-6 in-aria-expanded:hidden;
+}
+
+.menu-close-icon {
+  @apply size-6 not-in-aria-expanded:hidden;
+}
+
+.navbar-content {
+  @apply flex flex-1 items-center justify-center sm:items-stretch sm:justify-start;
+}
+
+.navbar-brand {
+  @apply flex shrink-0 items-center;
+}
+
+.desktop-navigation {
+  @apply hidden sm:ml-6 sm:block;
+}
+
+.navbar-links {
+  @apply flex space-x-4;
+}
+
+.navbar-link {
+  @apply rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-white;
+}
+
+.navbar-actions {
+  @apply absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0;
+}
+
+.notifications-button {
+  @apply relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500;
+}
+
+.action-button-hit-area {
+  @apply absolute -inset-1.5;
+}
+
+.notification-icon {
+  @apply size-6;
+}
+
+.profile-dropdown {
+  @apply relative ml-3;
+}
+
+.profile-menu-toggle {
+  @apply relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500;
+}
+
+.profile-avatar {
+  @apply size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10;
+}
+
+.profile-menu {
+  @apply w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in;
+}
+
+.profile-menu-item {
+  @apply block px-4 py-2 text-sm text-gray-700 focus:bg-gray-100 focus:outline-hidden;
+}
+
+.mobile-menu {
+  @apply block sm:hidden;
+}
+
+.mobile-menu-links {
+  @apply space-y-1 px-2 pt-2 pb-3;
+}
+
+.mobile-nav-link {
+  @apply block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-white/5 hover:text-white;
+}
+
+.navbar-link.active,
+.mobile-nav-link.active {
+  background-color: var(--color-gray-900);
+  color: white;
+}

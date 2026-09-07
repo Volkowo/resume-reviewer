@@ -1,5 +1,64 @@
-<nav>
-  <a routerLink="/review" routerLinkActive="active">Review</a>
-  <a routerLink="/about" routerLinkActive="active">About</a>
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-header">
+      <div class="mobile-menu-controls">
+        <!-- Mobile menu button-->
+        <button type="button" command="--toggle" commandfor="mobile-menu" class="mobile-menu-toggle">
+          <span class="menu-toggle-hit-area"></span>
+          <span class="visually-hidden">Open main menu</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="menu-open-icon">
+            <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="menu-close-icon">
+            <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="navbar-content">
+        <div class="navbar-brand">
+          <p>Resume Reviewer</p>
+        </div>
+        <div class="desktop-navigation">
+          <div class="navbar-links">
+            <a routerLink="/review" routerLinkActive="active" ariaCurrentWhenActive="page" class="navbar-link">Review</a>
+            <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page" class="navbar-link">About</a>
+          </div>
+        </div>
+      </div>
+      <div class="navbar-actions">
+        <button type="button" class="notifications-button">
+          <span class="action-button-hit-area"></span>
+          <span class="visually-hidden">View notifications</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="notification-icon">
+            <path d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+
+        <!-- Profile dropdown -->
+        <el-dropdown class="profile-dropdown">
+          <button class="profile-menu-toggle">
+            <span class="action-button-hit-area"></span>
+            <span class="visually-hidden">Open user menu</span>
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="profile-avatar" />
+          </button>
+
+          <el-menu anchor="bottom end" popover class="profile-menu">
+            <a href="#" class="profile-menu-item">Your profile</a>
+            <a href="#" class="profile-menu-item">Settings</a>
+            <a href="#" class="profile-menu-item">Sign out</a>
+          </el-menu>
+        </el-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <el-disclosure id="mobile-menu" hidden class="mobile-menu">
+    <div class="mobile-menu-links">
+      <a href="#" aria-current="page" class="mobile-nav-link active">Dashboard</a>
+      <a href="#" class="mobile-nav-link">Team</a>
+      <a href="#" class="mobile-nav-link">Projects</a>
+      <a href="#" class="mobile-nav-link">Calendar</a>
+    </div>
+  </el-disclosure>
 </nav>
 <router-outlet />
