@@ -14,9 +14,12 @@
             <div class="">
                 <h4 class="mb-3">Job Description</h4>
                 <!-- // TODO: Check what novalidate is. -->
-                <form class="jobDescForm" novalidate>
+                <form class="resumeReviewForm" novalidate>
                     <label for="jobDescription" class="form-label">Job Description</label>
-                    <textarea class="form-control" id="jobDescription" rows="3" [(ngModel)]="jobDesc" name="jobDesc" placeholder="Enter the job description here..."></textarea>
+                    <textarea class="form-control" id="jobDescription" rows="3" [(ngModel)]="jobDesc" name="jobDesc" placeholder="Enter the job description here."></textarea>
+
+                    <label for="resume" class="form-label">Resume</label>
+                    <textarea class="form-control" id="resume" rows="3" [(ngModel)]="resume" name="resume" placeholder="Enter your resume here."></textarea>
                     <button class="btn btn-primary" type="submit" (click)="submit()">Submit</button>
                 </form>
             </div>
