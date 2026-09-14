@@ -7,6 +7,8 @@ function route(app) {
         const { jobDesc, resume } = req.body;
         console.log(`BACKEND - Review API is working with job description: ${jobDesc}`);
         console.log(`BACKEND - Review API is working with resume: ${resume}`);
+
+        res.json({ message: 'Review API is working', jobDesc, resume });
     });
 }
 
