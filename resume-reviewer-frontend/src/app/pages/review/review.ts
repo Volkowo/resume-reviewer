@@ -37,13 +37,17 @@ export class Review implements OnInit {
     console.log('Job Description:', this.jobDesc);
     console.log('Resume:', this.resume);
     if(this.jobDesc.trim() && this.resume.trim()) {
-      this.http.post('http://localhost:3000/api/review', { jobDesc: this.jobDesc, resume: this.resume }).subscribe((res: any) => {
+      const jobDesc = this.jobDesc;
+      const resume = this.resume;
+      this.http.post('http://localhost:3000/api/review', { jobDesc, resume }).subscribe((res: any) => {
         this.test.set(res.message);
-        this.submittedJobDesc.set(this.jobDesc);
-        this.submittedResume.set(this.resume);
+        this.submittedJobDesc.set(jobDesc);
+        this.submittedResume.set(resume);
         this.submitted.set(true);
+        this.jobDesc = '';
+        this.resume = '';
       });
-      this.resetInput();
+      // anything here runs first before the http.post() call is completed.
     } else {
       this.submitted.set(false);
       alert('Please enter both a job description and a resume before submitting.');
