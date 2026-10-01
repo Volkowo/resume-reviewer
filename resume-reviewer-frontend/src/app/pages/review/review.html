@@ -23,20 +23,6 @@
                     <button class="btn btn-primary" type="submit" (click)="submit()" [disabled]="loading()">Submit</button>
                 </form>
             </div>
-            @if (submitted()) {
-                <div class="mt-4">
-                    <h4 class="mb-3">Review</h4>
-                    <p>{{ test() }} and {{ submitted() }} </p>
-                </div>
-                <div class="mt-4">
-                    <h4 class="mb-3">Job Description</h4>
-                    <p>{{ submittedJobDesc() }}</p>
-                </div>
-                <div class="mt-4">
-                    <h4 class="mb-3">Resume</h4>
-                    <p>{{ submittedResume() }}</p>
-                </div>
-            }
 
             @if (loading()) {
                 <p role="status">Reviewing your resume. Please wait…</p>
