@@ -1,9 +1,10 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { MarkdownComponent } from 'ngx-markdown';
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormsModule, MarkdownComponent],
   selector: 'app-review',
   styleUrl: './review.css',
   templateUrl: './review.html',

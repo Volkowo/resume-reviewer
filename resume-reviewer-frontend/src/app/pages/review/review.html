@@ -34,7 +34,7 @@
 
             @if (feedback()) {
                 <h4>Review</h4>
-                <p style="white-space: pre-wrap">{{ feedback() }}</p>
+                <markdown [data]="feedback()"></markdown>
             }
         </main>
     </div>
