@@ -20,7 +20,7 @@
 
                     <label for="resume" class="form-label">Resume</label>
                     <textarea class="form-control" id="resume" rows="3" [(ngModel)]="resume" name="resume" placeholder="Enter your resume here."></textarea>
-                    <button class="btn btn-primary" type="submit" (click)="submit()">Submit</button>
+                    <button class="btn btn-primary" type="submit" (click)="submit()" [disabled]="loading()">Submit</button>
                 </form>
             </div>
             @if (submitted()) {
@@ -36,6 +36,19 @@
                     <h4 class="mb-3">Resume</h4>
                     <p>{{ submittedResume() }}</p>
                 </div>
+            }
+
+            @if (loading()) {
+                <p role="status">Reviewing your resume. Please wait…</p>
+            }
+
+            @if (error()) {
+                <p role="alert">{{ error() }}</p>
+            }
+
+            @if (feedback()) {
+                <h4>Review</h4>
+                <p style="white-space: pre-wrap">{{ feedback() }}</p>
             }
         </main>
     </div>

@@ -14,6 +14,9 @@ export class Review implements OnInit {
   submittedJobDesc = signal('');
   submittedResume = signal('');
   test = signal('');
+  feedback = signal('');
+  loading = signal(false);
+  error = signal('');
   submitted = signal(false);
 
   constructor(private http: HttpClient) {}
@@ -33,24 +36,31 @@ export class Review implements OnInit {
   }
 
   submit() {
-    console.log('Submit button clicked');
-    console.log('Job Description:', this.jobDesc);
-    console.log('Resume:', this.resume);
-    if(this.jobDesc.trim() && this.resume.trim()) {
+    if (this.loading()) {return;} // Prevent multiple submissions while loading
+
+    if(this.jobDesc.trim() && this.resume.trim() ) {
+      this.loading.set(true);
+      this.feedback.set('');
+      this.error.set('');
+
       const jobDesc = this.jobDesc;
       const resume = this.resume;
+
       this.http.post('http://localhost:3000/api/review', { jobDesc, resume }).subscribe((res: any) => {
         this.test.set(res.message);
         this.submittedJobDesc.set(jobDesc);
         this.submittedResume.set(resume);
         this.submitted.set(true);
+        this.feedback.set(res.feedback);
+        this.loading.set(false);
         this.jobDesc = '';
         this.resume = '';
       });
       // anything here runs first before the http.post() call is completed.
     } else {
       this.submitted.set(false);
-      alert('Please enter both a job description and a resume before submitting.');
+      this.loading.set(false);
+      this.error.set('Please enter both a job description and a resume before submitting.');
     }
 
   }
