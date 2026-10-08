@@ -1,3 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+markdown ul {
+    list-style-type: disc;
+}
+
+markdown ol {
+    list-style-type: decimal;
+}
+
+markdown ul,
+markdown ol {
+    padding-left: 1.5rem;
+}
