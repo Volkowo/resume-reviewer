@@ -7,7 +7,7 @@ const resumeJSONSchema = {
     properties: {
         reviewSummary : {
             type: "string",
-            description: "Provide a concise overall assessment of how well the candidate's resume meets the job description. Highlight key strengths, significant gaps, and areas for improvement.",
+            description: "Provide a concise overall assessment of how well the candidate's resume meets the job description. Highlight key strengths, significant gaps, and areas for improvement. Distinguish evidence already in the resume and supporting evidence supplied elsewhere that could be added.",
         },
         requirements: {
             type: "array",
@@ -16,30 +16,32 @@ const resumeJSONSchema = {
                 type: "object",
                 properties: {
                     requirementID: {type: "string", description: "A unique identifier for this requirement within the response, using the format REQ001, REQ002, etc."},
-                    requirementText: {type: "string", description: "The specific requirement extracted from the job description. Preserve the original meaning without adding qualifications or expectations not stated."},
+                    requirementText: {type: "string", description: "The specific requirement extracted from the job description. Preserve the original meaning without adding qualifications or expectations not stated. Preserve named technologies, minimum durations, qualification levels, and other stated constraints. Separate independently assessable requirements while preserving alternatives such as 'Python or Java.'"},
                     matchType : {
                         type: "string", 
-                        enum: ["explicitMatch", "implicitStrong", "implicitWeak", "none"], 
-                        description: `Classify how well the candidate's provided evidence satisfies the requirement:
-                        - explicitMatch: The requirement is directly demonstrated or clearly stated in the candidate's evidence.
-                        - implicitStrong: The requirement is not explicitly stated, but the evidence strongly demonstrates it through relevant activities, responsibilities, or achievements.
-                        - implicitWeak: The evidence suggests some transferable or related capability, but does not sufficiently demonstrate the full requirement.
-                        - none: No relevant supporting evidence was found in the provided sources.
+                        enum: ["explicitMatch", "implicitStrong", "implicitWeak", "none"],  
+                        description: `Classify how well the candidate's provided resume satisfies the requirement:
+                        - explicitMatch: The resume directly states the requested skill, qualification, or experience and supports any specified constraints. No inference is needed to connect the evidence to the requirement.
+                        - implicitStrong: The requirement is not explicitly stated, but the resume strongly demonstrates it through relevant activities, responsibilities, or achievements. Meaning it requires inference from concrete action.
+                        - implicitWeak: The resume suggests some transferable or related capability, but does not sufficiently demonstrate the full requirement.
+                        - none: No relevant supporting evidence was found in the submitted resume.
                         Base the classification only on the supplied information. Do not assume unmentioned experience or qualifications. 
-                        Do not treat experience with a related technology as proof of experience with a specifically named technology.`
+                        Do not treat experience with a related technology as proof of experience with a specifically named technology.
+                        Assign matchType using only evidence in the submitted resume. Evidence from separately supplied job or project history may inform suggested actions but must not upgrade the resume's classification.`
                     },
                     explanation : {type: "string", description: "Explain how the available evidence supports the assigned match classification. Identify any relevant limitations or missing information."},
                     evidence : {
                         type: "array",
-                        description: "A list of evidence from the candidate's provided resume, job history, or project history that directly or indirectly supports this requirement. Return an empty array if no relevant evidence exists",
+                        description: "A list of evidence from the candidate's provided resume that directly or indirectly supports this requirement. Return an empty array if no relevant evidence exists",
                         items: {
                             type: "object",
                             properties: {
-                                "evidenceID": {type: "string", description: "A unique identifier for this evidence source, using the same ID when the same evidence is referenced elsewhere in the response."},
-                                "sourceType": {type: "string", enum: ["resume", "jobHistory", "projectHistory"], description: "Identifies whether the evidence comes from the submitted resume, stored job history, or stored project history."},
+                                "evidenceID": {type: "string", description: "A unique identifier for this evidence excerpt, using the same ID when the same evidence is referenced elsewhere in the response."},
+                                "sourceID": {type: "string", description: "The identifier assigned to the supplied source. Reuse that identifier; do not invent a source ID."},
+                                "sourceType": {type: "string", enum: ["resume"], description: "Identifies whether the evidence comes from the submitted resume, stored job history, or stored project history."},
                                 "sourceText": {type: "string", description: "An exact, unmodified quotation from the specified source. Do not paraphrase, embellish, or invent evidence."}
                             },
-                            required: ["evidenceID", "sourceType", "sourceText"],
+                            required: ["evidenceID", "sourceID", "sourceType", "sourceText"],
                             additionalProperties: false
                         }
                     }
@@ -56,7 +58,7 @@ const resumeJSONSchema = {
                 properties: {
                     actionID: {type: "string", description: "A unique identifier for the suggested action, using the format ACT001, ACT002, etc."},
                     requirementID: {type: "string", description: "The unique identifier of the requirement that this suggested action addresses."},
-                    actionText: {type: "string", description: "Provide a specific, actionable recommendation for improving the resume's alignment with the associated job requirement without inventing experience or qualifications."},
+                    actionText: {type: "string", description: "Provide a specific, actionable recommendation for improving the resume's alignment with the associated job requirement without inventing experience or qualifications. When supporting experience is absent, recommend adding it only if accurate. Do not suggest presenting an unsupported skill or qualification as existing experience."},
                     explanation: {type: "string", description: "Explain why this action would improve the resume's alignment with the associated requirement. Reference existing evidence where available, and identify relevant gaps or limitations. Do not assume the candidate has experience that has not been provided."},
                     evidence : {
                         type: "array",
@@ -64,11 +66,12 @@ const resumeJSONSchema = {
                         items: {
                             type: "object",
                             properties: {
-                                "evidenceID": {type: "string", description: "A unique identifier for this evidence source, using the same ID when the same evidence is referenced elsewhere in the response."},
+                                "evidenceID": {type: "string", description: "A unique identifier for this evidence excerpt, using the same ID when the same evidence is referenced elsewhere in the response."},
+                                "sourceID": {type: "string", description: "The identifier assigned to the supplied source. Reuse that identifier; do not invent a source ID."},
                                 "sourceType": {type: "string", enum: ["resume", "jobHistory", "projectHistory"], description: "Identifies whether the evidence comes from the submitted resume, stored job history, or stored project history."},
                                 "sourceText": {type: "string", description: "An exact, unmodified quotation from the specified source. Do not paraphrase, embellish, or invent evidence."}
                             },
-                            required: ["evidenceID", "sourceType", "sourceText"],
+                            required: ["evidenceID", "sourceID", "sourceType", "sourceText"],
                             additionalProperties: false
                         }
                     }

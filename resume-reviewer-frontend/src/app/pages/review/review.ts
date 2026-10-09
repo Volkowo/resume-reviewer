@@ -60,7 +60,7 @@ export class Review implements OnInit {
         }, 
         error: (err) => {
           this.loading.set(false);
-          this.error.set(err.error.message || 'An error occurred while submitting the review. Please try again.'  );
+          this.error.set(err.error?.message || 'An error occurred while submitting the review. Please try again.'  );
         }
       });
       // anything here runs first before the http.post() call is completed.
