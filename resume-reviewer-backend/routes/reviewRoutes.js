@@ -4,69 +4,82 @@ const reviewer = new GeminiReviewer();
 function route(app) {
     app.post('/api/review', async function (req, res) {
         if (!req.body) {
-            return res.sendStatus(400);
+            return res.status(400).json({ message: 'Invalid input. Please provide a job description and resume.' });
         }
 
         const { jobDesc, resume } = req.body;
         console.log(`BACKEND - Review API is working with job description: ${jobDesc}`);
         console.log(`BACKEND - Review API is working with resume: ${resume}`);
 
-        // const feedback = await reviewer.review(resume, jobDesc);
-        const feedback = 
-        `
-        # Resume Review
+        if(typeof jobDesc !== 'string' || !jobDesc.trim()) {
+            return res.status(400).json({ message: 'Invalid input. Please provide a valid job description.' });
+        }
 
-        Your resume shows a **strong foundation in software development** for a Junior Software Engineer role.
+        if(typeof resume !== 'string' || !resume.trim()) {
+            return res.status(400).json({ message: 'Invalid input. Please provide a valid resume.' });
+        }
 
-        ## Key Strengths
+        try {
+            // const feedback = await reviewer.review(resume, jobDesc);
+            const feedback = 
+            `
+            # Resume Review
 
-        - **Education:** Your Bachelor of Information Technology is relevant to the role.
-        - **Practical experience:** Your volunteer and internship work demonstrates experience solving real problems.
-        - Developed tools for medical imaging anonymisation.
-        - Automated a video workflow using Blender.
-        - **Projects:** You have worked with technologies such as \`Angular\`, \`Node.js\`, and \`MongoDB\`.
+            Your resume shows a **strong foundation in software development** for a Junior Software Engineer role.
 
-        ## Areas to Improve
+            ## Key Strengths
 
-        1. **Explain your impact.**
-        Describe what changed as a result of your work.
-        2. **Clarify your contribution.**
-        Explain which features you personally designed, implemented, or tested.
-        3. **Highlight collaboration.**
-        Include examples of code reviews, teamwork, or technical documentation.
+            - **Education:** Your Bachelor of Information Technology is relevant to the role.
+            - **Practical experience:** Your volunteer and internship work demonstrates experience solving real problems.
+            - Developed tools for medical imaging anonymisation.
+            - Automated a video workflow using Blender.
+            - **Projects:** You have worked with technologies such as \`Angular\`, \`Node.js\`, and \`MongoDB\`.
 
-        ### Example Rewrite
+            ## Areas to Improve
 
-        **Original:**
-        Worked on a medical imaging application.
+            1. **Explain your impact.**
+            Describe what changed as a result of your work.
+            2. **Clarify your contribution.**
+            Explain which features you personally designed, implemented, or tested.
+            3. **Highlight collaboration.**
+            Include examples of code reviews, teamwork, or technical documentation.
 
-        **Suggested:**
-        Developed a Python tool using \`pydicom\` to support medical imaging anonymisation and reduce manual processing.
+            ### Example Rewrite
 
-        *Only include claims that accurately reflect your work.*
+            **Original:**
+            Worked on a medical imaging application.
 
-        ## Match to the Job Description
+            **Suggested:**
+            Developed a Python tool using \`pydicom\` to support medical imaging anonymisation and reduce manual processing.
 
-        | Requirement | Evidence | Suggested Improvement |
-        | --- | --- | --- |
-        | Programming skills | University and personal projects | Describe one technical challenge |
-        | Teamwork | Internship experience | Explain how you collaborated |
-        | Testing | Limited detail provided | Mention tests you actually wrote |
+            *Only include claims that accurately reflect your work.*
 
-        > Prioritise clear examples of your contribution over long lists of technologies.
+            ## Match to the Job Description
 
-        ---
+            | Requirement | Evidence | Suggested Improvement |
+            | --- | --- | --- |
+            | Programming skills | University and personal projects | Describe one technical challenge |
+            | Teamwork | Internship experience | Explain how you collaborated |
+            | Testing | Limited detail provided | Mention tests you actually wrote |
 
-        ## Next Steps
+            > Prioritise clear examples of your contribution over long lists of technologies.
 
-        - Tailor your summary to the role.
-        - Add concrete outcomes where available.
-        - Check spelling and formatting.
+            ---
 
-        **Overall:** You have relevant experience to build on. More specific examples would make your resume more convincing.
-        `
-        console.log(feedback)
-        res.json({ feedback });
+            ## Next Steps
+
+            - Tailor your summary to the role.
+            - Add concrete outcomes where available.
+            - Check spelling and formatting.
+
+            **Overall:** You have relevant experience to build on. More specific examples would make your resume more convincing.
+            `
+            console.log(feedback)
+            return res.json({ feedback });
+        } catch (err) {
+            console.error('Error during review:', err);
+            return res.status(500).json({ message: 'An error occurred while processing the review.' });
+        }
     });
 }
 

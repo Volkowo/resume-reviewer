@@ -47,15 +47,21 @@ export class Review implements OnInit {
       const jobDesc = this.jobDesc;
       const resume = this.resume;
 
-      this.http.post('http://localhost:3000/api/review', { jobDesc, resume }).subscribe((res: any) => {
-        this.test.set(res.message);
-        this.submittedJobDesc.set(jobDesc);
-        this.submittedResume.set(resume);
-        this.submitted.set(true);
-        this.feedback.set(res.feedback);
-        this.loading.set(false);
-        this.jobDesc = '';
-        this.resume = '';
+      this.http.post('http://localhost:3000/api/review', { jobDesc, resume }).subscribe({
+        next: (res: any) => {
+          this.submittedJobDesc.set(jobDesc);
+          this.submittedResume.set(resume);
+
+          this.submitted.set(true);
+          this.feedback.set(res.feedback);
+          this.loading.set(false);
+          this.jobDesc = '';
+          this.resume = '';
+        }, 
+        error: (err) => {
+          this.loading.set(false);
+          this.error.set(err.error.message || 'An error occurred while submitting the review. Please try again.'  );
+        }
       });
       // anything here runs first before the http.post() call is completed.
     } else {
