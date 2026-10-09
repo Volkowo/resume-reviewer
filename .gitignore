@@ -137,3 +137,6 @@ dist
 
 # Agents Skills
 .agents/
+
+# Local response example
+/resume-reviewer-backend/routes/test.json
