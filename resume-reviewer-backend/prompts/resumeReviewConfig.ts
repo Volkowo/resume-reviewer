@@ -34,6 +34,16 @@ export class ResumeReviewConfig {
             - Explain each classification and identify relevant supporting evidence.
             - If no relevant resume evidence exists, return an empty evidence array.
 
+            REQUIREMENT EVIDENCE RULES:
+            - If matchType is "none", evidence MUST be an empty array [].
+            - If matchType is "explicitMatch", "implicitStrong", or
+            "implicitWeak", evidence MUST contain at least one
+            relevant supporting excerpt.
+            - Do not include evidence that merely confirms the
+            absence of a skill, experience, or qualification.
+            - Evidence must demonstrate the required capability
+            or meaningfully transferable skills.
+
             3. SUGGESTED IMPROVEMENTS
             - Recommend specific, actionable improvements to help the resume
             better align with the job description.
@@ -102,10 +112,15 @@ export class ResumeReviewConfig {
                                 description: `Classify how well the candidate's provided resume satisfies the requirement:
                                 - explicitMatch: The resume directly states the requested skill, qualification, or experience and supports any specified constraints. No inference is needed to connect the evidence to the requirement.
                                 - implicitStrong: The requirement is not explicitly stated, but the resume strongly demonstrates it through relevant activities, responsibilities, or achievements. Meaning it requires inference from concrete action.
-                                - implicitWeak: The resume suggests some transferable or related capability, but does not sufficiently demonstrate the full requirement.
-                                - none: No relevant supporting evidence was found in the submitted resume.
+                                - implicitWeak: The resume demonstrates related skills, knowledge, or experience that are meaningfully transferable to the requirement, but does not demonstrate the full requirement itself. 
+                                This includes experience with similar technologies when relevant underlying concepts transfer. Do not claim the candidate has experience with a specifically required technology unless explicitly supported.
+                                - none: No relevant direct, indirect, or meaningfully transferable evidence exists in the submitted resume.
+
                                 Base the classification only on the supplied information. Do not assume unmentioned experience or qualifications. 
-                                Do not treat experience with a related technology as proof of experience with a specifically named technology.
+                                Experience with related technologies may qualify as implicitWeak when meaningful knowledge or skills are transferable.
+                                However, related technology experience must never be treated as proof that the candidate has used the specifically required technology.
+                                Explain which skills are transferable and explicitly acknowledge the missing experience.
+                                For requirements to hold a specific certification, licence, or credential, related skills, study, or exam preparation do not constitute a partial match. Assign none unless the required credential is demonstrated.
                                 Assign matchType using only evidence in the submitted resume. Evidence from separately supplied job or project history may inform suggested actions but must not upgrade the resume's classification.`
                             },
                             explanation : {type: "string", description: "Explain how the available evidence supports the assigned match classification. Identify any relevant limitations or missing information."},

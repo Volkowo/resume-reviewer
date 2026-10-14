@@ -33,8 +33,9 @@
             }
 
             @if (feedback()) {
-                <h4>Review</h4>
-                <markdown [data]="feedback()"></markdown>
+                <!-- <h4>Review</h4>
+                <markdown [data]="feedback()"></markdown> -->
+                <pre>{{ feedback() }}</pre>
             }
         </main>
     </div>

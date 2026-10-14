@@ -10,6 +10,52 @@ import { MarkdownComponent } from 'ngx-markdown';
   templateUrl: './review.html',
 })
 export class Review implements OnInit {
+
+  sampleJobDesc: string = `
+  Junior Software Developer — Harbour Digital
+  We are seeking a junior developer to help build and maintain web applications.
+
+  Requirements:
+  1. Experience developing applications using TypeScript.
+  2. Experience building user interfaces using Angular.
+  3. Ability to collaborate with other developers.
+  4. Ability to write automated software tests.
+  5. Experience working with PostgreSQL.
+  6. An AWS Certified Cloud Practitioner certification.
+  `;
+
+  sampleResume: string = `
+  Alex Morgan
+  Junior Software Developer
+
+  SUMMARY
+  Recent Bachelor of Information Technology graduate with experience
+  building web applications through university projects.
+
+  EDUCATION
+  Bachelor of Information Technology
+  Example University, completed November 2025.
+
+  PROJECTS
+
+  Campus Event Manager
+  February 2025 - June 2025
+  - Developed an event registration application using TypeScript.
+  - Built event listing pages and registration forms using Angular.
+  - Worked with three other developers, reviewed their pull requests,
+    and coordinated changes through weekly planning meetings.
+  - Manually checked registration forms using valid and invalid inputs
+    and recorded defects for the team to resolve.
+
+  Community Library Database
+  July 2025 - September 2025
+  - Designed a MySQL database for books, members, and loans.
+  - Wrote SQL queries using joins and aggregate functions.
+
+  CERTIFICATIONS
+  None.
+  `;
+
   jobDesc: string = '';
   resume: string = '';
   submittedJobDesc = signal('');
@@ -39,21 +85,26 @@ export class Review implements OnInit {
   submit() {
     if (this.loading()) {return;} // Prevent multiple submissions while loading
 
-    if(this.jobDesc.trim() && this.resume.trim() ) {
+    /*
+      1. Put const jobDesc and resume BACK inside the if statement once done testing.
+      2. Change jobDesc && resume inside if statement back to this.jobDesc && this.resume once done testing.
+    */
+    const jobDesc = this.sampleJobDesc.trim();
+    const resume = this.sampleResume.trim();
+
+    if(jobDesc && resume ) {
       this.loading.set(true);
       this.feedback.set('');
       this.error.set('');
 
-      const jobDesc = this.jobDesc;
-      const resume = this.resume;
-
       this.http.post('http://localhost:3000/api/review', { jobDesc, resume }).subscribe({
         next: (res: any) => {
+          const feedback = JSON.stringify(res.feedback, null, 2); // Pretty-print the feedback JSON
           this.submittedJobDesc.set(jobDesc);
           this.submittedResume.set(resume);
 
           this.submitted.set(true);
-          this.feedback.set(res.feedback);
+          this.feedback.set(feedback);
           this.loading.set(false);
           this.jobDesc = '';
           this.resume = '';
