@@ -11,40 +11,43 @@ const sampleOutput = ResumeReviewConfig.setSampleOutput();
 export class GeminiReviewer {
     async review(resume: string, jobDesc: string){
         const input = ResumeReviewConfig.setPrompt(resume, jobDesc);
-        return sampleOutput; // For now, return the sample output. Uncomment the code below to enable actual Gemini review.
-        // const startedAt = performance.now();
-        // try {
-        //     const interaction = await ai.interactions.create({
-        //         model: "gemini-3.8-flash",
-        //         input: "Reply with just: Hello.",
-        //         response_format: {
-        //             type: 'text',
-        //             mime_type: 'application/json',
-        //             schema: resumeJSONSchema
-        //         }
-        //     }, 
-        //     {
-        //         maxRetries: 0
-        //     }
-        // );
+        // return sampleOutput; // For now, return the sample output. Uncomment the code below to enable actual Gemini review.
+        const startedAt = performance.now();
+        try {
+            const interaction = await ai.interactions.create({
+                model: "gemini-3.8-flash",
+                input: input,
+                response_format: {
+                    type: 'text',
+                    mime_type: 'application/json',
+                    schema: resumeJSONSchema
+                }
+            }, 
+            {
+                maxRetries: 0
+            }
+        );
 
-        //     if (!interaction.output_text) {
-        //         throw new Error("Gemini didn't return any review output.");
-        //     }
+        // console.log("GEMINI OUTPUT: ", interaction.output_text)
+        // return sampleOutput
 
-        //     const result = resumeSchema.safeParse(JSON.parse(interaction.output_text));
+        if (!interaction.output_text) {
+            throw new Error("Gemini didn't return any review output.");
+        }
 
-        //     if (!result.success) {
-        //         throw result.error; // Throw the ZodError if the output doesn't match the schema
-        //     }
+        const result = resumeSchema.safeParse(JSON.parse(interaction.output_text));
 
-        //     return result.data;
-        // } finally {
-        //     console.log(
-        //         `Review completed or failed after ${
-        //             ((performance.now() - startedAt) / 1000).toFixed(2)
-        //         } seconds`
-        //     );
-        // }
+        if (!result.success) {
+            throw result.error; // Throw the ZodError if the output doesn't match the schema
+        }
+
+        return result.data;
+        } finally {
+            console.log(
+                `Review completed or failed after ${
+                    ((performance.now() - startedAt) / 1000).toFixed(2)
+                } seconds`
+            );
+        }
     }
 }

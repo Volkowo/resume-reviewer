@@ -34,15 +34,15 @@ function route(app) {
 
             requirement = countRequirement(requirements)
 
-            console.log(`
-            TOTAL REQUIREMENTS: ${requirement.totalRequirement}
-            ========================================
-            1. Explicit Match: ${requirement.explicitMatch}
-            2. Implicit Match: ${requirement.implicitStrong + requirement.implicitWeak}
-                a. Implicit Weak Match: ${requirement.implicitWeak}
-                b. Implicit Strong Match: ${requirement.implicitStrong}
-            3. None Match: ${requirement.noneMatch}
-            `)
+            // console.log(`
+            // TOTAL REQUIREMENTS: ${requirement.totalRequirement}
+            // ========================================
+            // 1. Explicit Match: ${requirement.explicitMatch}
+            // 2. Implicit Match: ${requirement.implicitStrong + requirement.implicitWeak}
+            //     a. Implicit Weak Match: ${requirement.implicitWeak}
+            //     b. Implicit Strong Match: ${requirement.implicitStrong}
+            // 3. None Match: ${requirement.noneMatch}
+            // `)
 
             return res.json({ feedback });
         } catch (err) {
