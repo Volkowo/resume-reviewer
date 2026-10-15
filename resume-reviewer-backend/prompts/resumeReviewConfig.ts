@@ -179,4 +179,146 @@ export class ResumeReviewConfig {
             additionalProperties: false
         }
     }
+
+    static setSampleOutput() {
+        return {
+            "reviewSummary": "The candidate is a recent Bachelor of Information Technology graduate with strong foundational alignment for a junior front-end role. The resume demonstrates explicit matches for core technologies including TypeScript and Angular, as well as proven developer collaboration through university team projects. However, significant gaps exist regarding automated testing, PostgreSQL experience (only MySQL/general SQL is documented), and the AWS Certified Cloud Practitioner certification, which is explicitly noted as absent. Priority improvements should focus on clarifying any academic or personal experience with automated testing and PostgreSQL, or pursuing the AWS certification.",
+            "requirements": [
+                {
+                "requirementID": "REQ001",
+                "requirementText": "Experience developing applications using TypeScript.",
+                "matchType": "explicitMatch",
+                "explanation": "The candidate directly states experience developing an event registration application using TypeScript.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD001",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Developed an event registration application using TypeScript."
+                    }
+                ]
+                },
+                {
+                "requirementID": "REQ002",
+                "requirementText": "Experience building user interfaces using Angular.",
+                "matchType": "explicitMatch",
+                "explanation": "The candidate explicitly demonstrates experience building UI components (event listing pages and registration forms) using Angular.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD002",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Built event listing pages and registration forms using Angular."
+                    }
+                ]
+                },
+                {
+                "requirementID": "REQ003",
+                "requirementText": "Ability to collaborate with other developers.",
+                "matchType": "explicitMatch",
+                "explanation": "The candidate explicitly demonstrates collaboration by working with three developers, reviewing pull requests, and coordinating through weekly planning meetings.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD003",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Worked with three other developers, reviewed their pull requests, and coordinated changes through weekly planning meetings."
+                    }
+                ]
+                },
+                {
+                "requirementID": "REQ004",
+                "requirementText": "Ability to write automated software tests.",
+                "matchType": "implicitWeak",
+                "explanation": "The resume shows an understanding of software testing and QA processes (manual validation and defect logging), but specifically lacks evidence of writing automated software tests.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD004",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Manually checked registration forms using valid and invalid inputs and recorded defects for the team to resolve."
+                    }
+                ]
+                },
+                {
+                "requirementID": "REQ005",
+                "requirementText": "Experience working with PostgreSQL.",
+                "matchType": "implicitStrong",
+                "explanation": "The candidate demonstrates transferable relational database design and SQL query writing experience using MySQL, but does not demonstrate experience with PostgreSQL specifically.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD005",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Designed a MySQL database for books, members, and loans."
+                    },
+                    {
+                    "evidenceID": "EVD006",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Wrote SQL queries using joins and aggregate functions."
+                    }
+                ]
+                },
+                {
+                "requirementID": "REQ006",
+                "requirementText": "An AWS Certified Cloud Practitioner certification.",
+                "matchType": "none",
+                "explanation": "The resume explicitly states 'None' in the certifications section, providing no evidence of the requested AWS certification.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD007",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "None."
+                    }
+                ]
+                }
+            ],
+            "suggestedActions": [
+                {
+                "actionID": "ACT001",
+                "requirementID": "REQ004",
+                "actionText": "If you wrote unit, integration, or end-to-end tests for your Angular or TypeScript projects using tools such as Jasmine, Karma, or Jest, update the Campus Event Manager project to explicitly detail automated testing experience.",
+                "explanation": "The current resume only mentions manual checking of forms. Adding specific automated testing tools and test cases would directly satisfy this requirement.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD004",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Manually checked registration forms using valid and invalid inputs and recorded defects for the team to resolve."
+                    }
+                ]
+                },
+                {
+                "actionID": "ACT002",
+                "requirementID": "REQ005",
+                "actionText": "If you have used PostgreSQL in any academic assignments, coursework, or independent projects, explicitly add that experience to the resume. If not, consider building a small project using PostgreSQL to bridge the gap from MySQL.",
+                "explanation": "The job description specifically requests PostgreSQL. While MySQL demonstrates general relational database understanding, explicit PostgreSQL experience is required.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD005",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "Designed a MySQL database for books, members, and loans."
+                    }
+                ]
+                },
+                {
+                "actionID": "ACT003",
+                "requirementID": "REQ006",
+                "actionText": "If you are currently studying for or planning to sit the AWS Certified Cloud Practitioner exam, state this in the certifications section (e.g., 'AWS Certified Cloud Practitioner — In Progress'). Otherwise, consider working toward this certification to meet the requirement.",
+                "explanation": "The resume currently lists no certifications. Listing active progress or obtaining the certification will address a required qualification.",
+                "evidence": [
+                    {
+                    "evidenceID": "EVD007",
+                    "sourceID": "resume-1",
+                    "sourceType": "resume",
+                    "sourceText": "None."
+                    }
+                ]
+                }
+            ]
+        }
+    }
 }

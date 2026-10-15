@@ -1,5 +1,11 @@
 const { GeminiReviewer } = require('../services/geminiReviewer');
 const reviewer = new GeminiReviewer();
+var requirement = {
+    totalRequirement: 0,
+    explicitMatch: 0,
+    implicitMatch: 0,
+    noneMatch: 0
+}
 
 function route(app) {
     app.post('/api/review', async function (req, res) {
@@ -21,7 +27,40 @@ function route(app) {
 
         try {
             const feedback = await reviewer.review(resume, jobDesc);
-            console.log(feedback)
+
+            // TESTING ZONE
+            explicitMatch = 0;
+            implicitStrong = 0;
+            implicitWeak = 0;
+            noneMatch = 0;
+            totalRequirement = feedback.requirements.length;
+
+            for (const requirement of feedback.requirements) {
+                switch(requirement.matchType) {
+                    case "explicitMatch":
+                        explicitMatch++;
+                        break;
+                    case "implicitWeak":
+                        implicitWeak++;
+                        break;
+                    case "implicitStrong":
+                        implicitStrong++;
+                        break;
+                    case "none":
+                        noneMatch++;
+                        break;
+                }
+            }
+            console.log(`
+            TOTAL REQUIREMENTS: ${totalRequirement}
+            ========================================
+            1. Explicit Match: ${explicitMatch}
+            2. Implicit Match: ${implicitStrong + implicitWeak}
+                a. Implicit Weak Match: ${implicitWeak}
+                b. Implicit Strong Match: ${implicitStrong}
+            3. None Match: ${noneMatch}
+            `)
+
             return res.json({ feedback });
         } catch (err) {
             console.error('Error during review:', err);
